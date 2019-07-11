@@ -1,0 +1,19 @@
+{
+  "name": "card-service",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "4.x",
+    "mongodb": "^3.2.2",
+    "mongoose": "5.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "debug": "node --inspect-brk index",
+    "start": "npx nodemon index"
+  }
+}
