@@ -34,7 +34,7 @@ mongoose.connect(uri, { useNewUrlParser: true }).then(
         console.log("Multiple documents inserted to Collection");
       }
     })
-    app.listen(port, () => console.log(`Example app listening on port ${port}`))
+    app.listen(process.env.PORT || 5000, () => console.log(`Example app listening on port ${port}`))
   },
   err => {
     console.log(`Error Connecting to MongoDB: ${err}`)
