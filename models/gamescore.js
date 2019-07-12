@@ -1,9 +1,15 @@
 const mongoose = require('mongoose')
 
 const gameScoreSchema = new mongoose.Schema({
-    score: {
-        type: String
-    },
+    details: [{
+        score: {
+            type: String
+        },
+        resultstring: {
+            type: String
+        }
+    }],
+    totalscore: Number,
     date: {
         type: Date,
         default: Date.now
@@ -11,6 +17,7 @@ const gameScoreSchema = new mongoose.Schema({
     iteration: {
         type: String
     }
+
 });
 const GameScore = mongoose.model('GameScore', gameScoreSchema);
 module.exports = GameScore;

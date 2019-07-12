@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
         shuffledCards.forEach((c, i) => {
            c.index = i;
         })
-        return res.json(shuffledCards)
+        return res.json(cards)
     });
 });
 router.get('/highscore', (req, res, next) => {
@@ -19,9 +19,11 @@ router.get('/highscore', (req, res, next) => {
     })
 });
 router.post('/score/add', (req, res, next) => {
+    const totalScore = req.body.details.map(p=>p.score).reduce((prev, next) => prev + next);
     const gamescore = new GameScore({
-        score: req.body.score,
-        iteration: req.body.iteration
+        totalscore: totalScore,
+        iteration: req.body.iteration,
+        details:req.body.details
     });
     gamescore.save((err, results) => {
         if (err) return next(err);
