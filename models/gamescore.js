@@ -19,5 +19,6 @@ const gameScoreSchema = new mongoose.Schema({
     }
 
 });
+
 const GameScore = mongoose.model('GameScore', gameScoreSchema);
 module.exports = GameScore;

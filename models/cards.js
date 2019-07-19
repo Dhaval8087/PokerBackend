@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const inventorySchema = new mongoose.Schema({
+const cardsSchema = new mongoose.Schema({
     rank: {
         type: String
     },
@@ -11,5 +11,5 @@ const inventorySchema = new mongoose.Schema({
         type: Number
     }
 });
-const Inventory = mongoose.model('Inventory', inventorySchema);
-module.exports = Inventory;
+const Cards = mongoose.model('Cards', cardsSchema);
+module.exports = Cards;

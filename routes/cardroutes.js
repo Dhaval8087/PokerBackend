@@ -1,36 +1,35 @@
 const express = require('express');
 const router = express.Router();
-const Inventory = require('../models/inventory');
+const Cards = require('../models/cards');
 const GameScore = require('../models/gamescore');
-/* GET ALL INVENTORY */
+/* GET ALL CARDS */
 router.get('/', function (req, res, next) {
-    Inventory.find(function (err, cards) {
+    Cards.find(function (err, cards) {
         if (err) return next(err);
-        const shuffledCards = shuffle(cards)
+        const shuffledCards = shuffleDeck(cards,getRandomInt(10, 25));
         shuffledCards.forEach((c, i) => {
-           c.index = i;
+            c.index = i;
         })
         return res.json(cards)
     });
 });
-router.get('/highscore', (req, res, next) => {
-    Inventory.find((err, cards) => {
-        return res.send("40");
-    })
-});
+
+/* ADD SCORE */
 router.post('/score/add', (req, res, next) => {
-    const totalScore = req.body.details.map(p=>p.score).reduce((prev, next) => prev + next);
+    const totalScore = req.body.details.map(p => p.score).reduce((prev, next) => prev + next);
+
     const gamescore = new GameScore({
         totalscore: totalScore,
         iteration: req.body.iteration,
-        details:req.body.details
+        details: req.body.details
     });
     gamescore.save((err, results) => {
         if (err) return next(err);
         return res.json(results._id);
     });
 });
-router.get('/score/get',(req,res,next)=>{
+/* GET SCORE */
+router.get('/score/get', (req, res, next) => {
     GameScore.find(function (err, scores) {
         if (err) return next(err);
         return res.json(scores)
@@ -38,15 +37,16 @@ router.get('/score/get',(req,res,next)=>{
 });
 
 /* Private function */
-function shuffle(array) {
-    var m = array.length, t, i;
-    while (m) {
-        i = Math.floor(Math.random() * m--);
-
-        t = array[m];
-        array[m] = array[i];
-        array[i] = t;
+function shuffleDeck(cards,shuffleCnt) {
+    for(var i = 0; i < shuffleCnt; i++) {
+        var rndNo = getRandomInt(0, 51);
+        var card = cards[i];
+        cards[i] = cards[rndNo];
+        cards[rndNo] = card;
     }
-    return array;
+    return cards;
+}
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 module.exports = router;
